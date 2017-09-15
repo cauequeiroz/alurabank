@@ -4,14 +4,19 @@ class NegociacaoController {
     private _inputQuantidade: HTMLInputElement;
     private _inputValor: HTMLInputElement;
 
+    private _negociacaoLista = new NegociacaoLista();
+    private _negociacaoView = new NegociacaoView('#negociacaoView');
+
     constructor() {
         
         this._inputData = <HTMLInputElement>document.querySelector('#data');
         this._inputQuantidade = <HTMLInputElement>document.querySelector('#quantidade');
         this._inputValor = <HTMLInputElement>document.querySelector('#valor');
+        
+        this._negociacaoView.update(this._negociacaoLista);
     }
 
-    adiciona(event: Event) {
+    adiciona(event: Event): void {
 
         event.preventDefault();
         let negociacao = new Negociacao(
@@ -20,6 +25,7 @@ class NegociacaoController {
             parseFloat(this._inputValor.value)
         );
 
-        console.log(negociacao);
+        this._negociacaoLista.adiciona(negociacao);
+        this._negociacaoView.update(this._negociacaoLista);
     }
 }
