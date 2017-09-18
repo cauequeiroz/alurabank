@@ -32,6 +32,7 @@ export class NegociacaoView extends View<NegociacaoLista> {
                 <tfoot>
                 </tfoot>
             </table>
+            <script>alert('caue')</script>
         `;
     }
 }

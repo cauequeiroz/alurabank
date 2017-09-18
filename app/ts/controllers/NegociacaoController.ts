@@ -8,7 +8,7 @@ export class NegociacaoController {
     private _inputValor: JQuery;
 
     private _negociacaoLista = new NegociacaoLista();
-    private _negociacaoView = new NegociacaoView('#negociacaoView');
+    private _negociacaoView = new NegociacaoView('#negociacaoView', true);
     private _mensagemView = new MensagemView('#mensagemView');
 
     constructor() {
@@ -23,8 +23,16 @@ export class NegociacaoController {
     adiciona(event: Event): void {
 
         event.preventDefault();
+
+        let data = new Date(this._inputData.val().replace(/-/g, ','));
+        
+        if ( !this.ehDiaUtil(data) ) {
+            this._mensagemView.update('Apenas negociações no dia da semana.');
+            return;
+        }
+
         let negociacao = new Negociacao(
-            new Date(this._inputData.val().replace(/-/g, ',')),
+            data,
             parseInt(this._inputQuantidade.val()),
             parseFloat(this._inputValor.val())
         );
@@ -33,4 +41,20 @@ export class NegociacaoController {
         this._negociacaoView.update(this._negociacaoLista);
         this._mensagemView.update('Negociação adicionada com sucesso!');
     }
+
+    private ehDiaUtil(data: Date) {
+        
+        return data.getDay() !== Week.sabado && data.getDay() !== Week.domingo;
+    }
+}
+
+enum Week {
+
+    domingo,
+    segunda,
+    terca,
+    quarta,
+    quinta,
+    sexta,
+    sabado
 }
