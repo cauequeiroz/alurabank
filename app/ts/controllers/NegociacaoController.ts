@@ -1,10 +1,16 @@
 import { Negociacao, NegociacaoLista } from '../models/index';
 import { NegociacaoView, MensagemView } from '../views/index';
+import { domInject } from '../helpers/index';
 
 export class NegociacaoController {
 
+    @domInject('#data')
     private _inputData: JQuery;
+
+    @domInject('#quantidade')
     private _inputQuantidade: JQuery;
+
+    @domInject('#valor')
     private _inputValor: JQuery;
 
     private _negociacaoLista = new NegociacaoLista();
@@ -13,10 +19,6 @@ export class NegociacaoController {
 
     constructor() {
         
-        this._inputData = $('#data');
-        this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
-
         this._negociacaoView.update(this._negociacaoLista);
     }
 
